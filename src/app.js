@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Routines from "./components/routines";
 import Myroutines from "./components/myRoutines";
@@ -18,14 +18,20 @@ return(<nav>
 }
 
 const App = () => {
+    const [loading, setLoading ] = useState(true);
+    const [token, setToken] = useState(localStorage.getItem("token") || null);
+    const [activities, setActivities] = useState([]);
+    const [routines, setRoutines] = useState([]);
+    const [routineWithActivities, setRoutineWithActivities] = useState([]);
+    
 return(
     <BrowserRouter>
     <NavBar />
         <Routes>
             <Route path="/" element={<Home />}/>
-            <Route path="/routines" element={<Routines />}/>
+            <Route path="/routines" element={<Routines routines={routines} setRoutines={setRoutines} loading={loading} setLoading={setLoading} routineWithActivities={routineWithActivities} setRoutineWithActivities={setRoutineWithActivities}/>}/>
             <Route path="/myroutines" element={<Myroutines />}/>
-            <Route path="/activities" element={<Activities/>}/>
+            <Route path="/activities" element={<Activities activities={activities} setActivities={setActivities} loading={loading} setLoading={setLoading}/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
         </Routes>
@@ -35,7 +41,7 @@ return(
 }   
 
 const Home = () => {
-    return(<div><h1>HELLO world</h1></div>)
+    return(<div><h1>Fitness Tracker</h1></div>)
 }
 
 
