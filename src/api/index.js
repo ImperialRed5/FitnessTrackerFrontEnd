@@ -46,28 +46,28 @@ export const loginUser = async (username, password)  =>{
       } catch (err) {
         console.error(err);
       }
-  }
+  };
 
-// routiunes  
-export const getRoutines = async () => {
-    try{
-        const response = await fetch(`${BASE_URL}/routines`,{
-            headers: { 
-                'Content-Type': 'application/json',
-            },
+// /users/me
+export const getUser = async(token)=>{
+    try {
+        const response = await fetch(`${BASE_URL}/users/me`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
         });
         const result = await response.json();
-        console.log('ROUTINES', result)
+        console.log('meee', result);
         return result
-    }catch(err){
+      } catch (err) {
         console.error(err);
-    }
-}
-// my routines 
+      }
+};
 
 
 
-// activities 
+// activities ENDPOINTS
 export const getActivities = async () => {
     try{
         const response = await fetch(`${BASE_URL}/activities`, {
@@ -76,11 +76,52 @@ export const getActivities = async () => {
             },
         });
         const result = await response.json();
+        return result;
+    }catch(err){
+        console.error(err);
+    }
+};
+
+//post activities
+export const postActivities = async(token, name, description) => {
+    try{
+        const response = await fetch(`${BASE_URL}/activities`,{
+            method: "POST",
+            headers:{
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                name,
+                description
+            }),
+        });
+        const result = await response.json();
+        console.log('TEST', result)
+        return result;
+    }catch(err){
+        console.error(err)
+    }
+};
+
+
+// routiunes  ENDPOINTS
+export const getRoutines = async () => {
+    try{
+        const response = await fetch(`${BASE_URL}/routines`,{
+            headers: { 
+                'Content-Type': 'application/json',
+            },
+        });
+        const result = await response.json();
         return result
     }catch(err){
         console.error(err);
     }
 }
+// my routines 
+
+//Routine_Activities ENDPOINTS
 export const getRoutinesWithActivities = async (activityId) => {
     try{
         const response = await fetch(`${BASE_URL}/activities/${activityId}/routines`,{
@@ -94,5 +135,4 @@ export const getRoutinesWithActivities = async (activityId) => {
     }catch(err){
         console.error(err);
     }
-}
-
+};

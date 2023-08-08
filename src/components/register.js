@@ -5,7 +5,7 @@ import { registerUser } from "../api";
 
 //make alert if password is too short
 const Register = ({username,setUsername, setPassword, password}) =>{
-
+    
     const handleRegistration = async (e) => {
         e.preventDefault();
         await registerUser(username, password)
