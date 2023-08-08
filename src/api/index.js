@@ -2,9 +2,10 @@
 export const COHORT_NAME = '2303-ftb-et-web-pt';
 export const BASE_URL = `http://fitnesstrac-kr.herokuapp.com/api`;
 
-
+//USER ENDPOINTS 
 // register 
 export const registerUser = async (username, password) => {
+
     try{
         const response = await fetch(
             `${BASE_URL}/users/register`, {
@@ -24,6 +25,28 @@ export const registerUser = async (username, password) => {
     }
 }
 
+// login  
+
+export const loginUser = async (username, password)  =>{
+    try {
+        const response = await fetch(`${BASE_URL}/users/login`, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              username: username,
+              password: password
+          })
+        });
+        const result = await response.json();
+        console.log(result);
+        return result
+
+      } catch (err) {
+        console.error(err);
+      }
+  }
 
 // routiunes  
 export const getRoutines = async () => {
@@ -40,6 +63,10 @@ export const getRoutines = async () => {
         console.error(err);
     }
 }
+// my routines 
+
+
+
 // activities 
 export const getActivities = async () => {
     try{
@@ -68,9 +95,4 @@ export const getRoutinesWithActivities = async (activityId) => {
         console.error(err);
     }
 }
-// my routines 
 
-
-// login  
-
-export const loginUser = async ()
