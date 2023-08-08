@@ -4,7 +4,25 @@ export const BASE_URL = `http://fitnesstrac-kr.herokuapp.com/api`;
 
 
 // register 
-
+export const registerUser = async (username, password) => {
+    try{
+        const response = await fetch(
+            `${BASE_URL}/users/register`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                        username: username,
+                        password: password
+                })
+            })
+            const result = await response.json();
+            console.log('CREATING USER.. ', result);
+    }catch(err){
+        console.error(err)
+    }
+}
 
 
 // routiunes  
@@ -16,6 +34,7 @@ export const getRoutines = async () => {
             },
         });
         const result = await response.json();
+        console.log('ROUTINES', result)
         return result
     }catch(err){
         console.error(err);
@@ -54,3 +73,4 @@ export const getRoutinesWithActivities = async (activityId) => {
 
 // login  
 
+export const loginUser = async ()

@@ -33,7 +33,7 @@ return(
             <Route path="/myroutines" element={<Myroutines />}/>
             <Route path="/activities" element={<Activities activities={activities} setActivities={setActivities} loading={loading} setLoading={setLoading}/>}/>
             <Route path="/login" element={<Login/>}/>
-            <Route path="/register" element={<Register/>}/>
+            <Route path="/register" element={<Register token={token}/>}/>
         </Routes>
         <div className="app"></div>
     </BrowserRouter>
