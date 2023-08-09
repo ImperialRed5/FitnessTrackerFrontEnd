@@ -52,10 +52,6 @@ const Activities = ({ activities, setActivities, token }) => {
           {successMessage}
         </Alert>
       )}
-
-      <Typography variant="h2" gutterBottom>
-        Activities
-      </Typography>
       {error && <Alert severity="error">{error}</Alert>}
 
       {token && (
