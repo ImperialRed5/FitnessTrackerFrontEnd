@@ -28,11 +28,11 @@ const Activities = ({ activities, setActivities, token }) => {
     const response = await postActivities(token, name, description);
     if (response.error) {
       setError(response.error);
-      setSuccessMessage(null); // clear out any previous success message
+      setSuccessMessage(null); 
     } else {
       setError(null);
-      setName(""); // reset form fields
-      setDescription(""); // reset form fields
+      setName(""); 
+      setDescription(""); 
       setActivities((prevActivities) => [...prevActivities, response]);
       setSuccessMessage("Activity created successfully!");
     }
