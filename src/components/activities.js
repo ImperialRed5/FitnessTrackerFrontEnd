@@ -1,57 +1,111 @@
 import React, { useEffect, useState } from "react";
 import { getActivities, postActivities } from "../api";
+import {
+  Container,
+  Typography,
+  Paper,
+  TextField,
+  Button,
+  Alert,
+} from "@mui/material";
 
+const Activities = ({ activities, setActivities, token }) => {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
-const Activities = ({activities, setActivities, token,}) =>{
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [error, setError] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      const activitiesResult = await getActivities();
+      setActivities(activitiesResult);
+    };
+    fetchData();
+  }, []);
 
-    useEffect(() =>{
-        const fetchData = async () => {
-            const activitiesResult = await getActivities();
-            setActivities(activitiesResult);
-        };
-        fetchData();
-    },[]);
-
-    const handleNewActivity = async (e) => {
-        e.preventDefault()
-        const response = await postActivities(token, name,description)
-        if (response.error) {
-            setError(response.error);
-        }else{
-            setError(null)
-            setActivities(prevActivities => [...prevActivities, response]);
-        }
+  const handleNewActivity = async (e) => {
+    e.preventDefault();
+    const response = await postActivities(token, name, description);
+    if (response.error) {
+      setError(response.error);
+      setSuccessMessage(null); // clear out any previous success message
+    } else {
+      setError(null);
+      setName(""); // reset form fields
+      setDescription(""); // reset form fields
+      setActivities((prevActivities) => [...prevActivities, response]);
+      setSuccessMessage("Activity created successfully!");
     }
-    return(
-    <div>
-        <h1>Activities</h1>
-        {error && <div className="error">{error}</div>}
-        {token && (
-            <form onSubmit={handleNewActivity}>
-                <label>
-                    Name:
-                    <input type="text" value={name} onChange={(e) =>setName(e.target.value)} />
-                </label>
-                <label>
-                    Description:
-                    <input type="text" value={description} onChange={(e) =>setDescription(e.target.value)} />
-                </label>
-                <button type="submit"> Create Activity</button>
-            </form>
-                
-        )}
-        {activities.map((activity)=>(
-            <div key={activity.id} value={activity}>
-                <h2>Activities</h2>
-                <h3>Name: {activity.name}</h3>
-                <h3>Description: {activity.description}</h3>
-            </div>
-            ))}
-    </div>
-    )
-}
+  };
+  return (
+    <Container>
+      <Typography variant="h2" gutterBottom>
+        Activities
+      </Typography>
+      {error && (
+        <Alert severity="error" style={{ margin: "10px 0" }}>
+          {error}
+        </Alert>
+      )}
+      {successMessage && (
+        <Alert severity="success" style={{ margin: "10px 0" }}>
+          {successMessage}
+        </Alert>
+      )}
+
+      <Typography variant="h2" gutterBottom>
+        Activities
+      </Typography>
+      {error && <Alert severity="error">{error}</Alert>}
+
+      {token && (
+        <Paper
+          component="form"
+          style={{ padding: "20px", marginBottom: "20px" }}
+          onSubmit={handleNewActivity}
+        >
+          <TextField
+            label="Name"
+            variant="outlined"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Description"
+            variant="outlined"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            style={{ marginTop: "10px" }}
+          >
+            Create Activity
+          </Button>
+        </Paper>
+      )}
+
+      {activities.map((activity) => (
+        <Paper
+          elevation={2}
+          style={{ padding: "15px", margin: "10px 0" }}
+          key={activity.id}
+        >
+          <Typography variant="h4">Activities</Typography>
+          <Typography variant="h6">Name: {activity.name}</Typography>
+          <Typography variant="h6">
+            Description: {activity.description}
+          </Typography>
+        </Paper>
+      ))}
+    </Container>
+  );
+};
 
 export default Activities;

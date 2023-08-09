@@ -5,15 +5,22 @@ import Myroutines from "./components/myRoutines";
 import Activities from "./components/activities";
 import Login from "./components/login";
 import Register from "./components/register";
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Button from '@mui/material/Button'
 
 const NavBar = () =>{
 return(<nav>
-    <Link to="/">Home</Link>
-    <Link to="/routines">Routines</Link>
-    <Link to="/myroutines">My Routines</Link>
-    <Link to="/activities">Activities</Link>
-    <Link to="/login">Login</Link>
-    <Link to="/register">Register</Link>
+    <AppBar position="static">
+      <Toolbar>
+        <Button color="inherit" component={Link} to="/">Home</Button>
+        <Button color="inherit" component={Link} to="/routines">Routines</Button>
+        <Button color="inherit" component={Link} to="/myroutines">My Routines</Button>
+        <Button color="inherit" component={Link} to="/activities">Activities</Button>
+        <Button color="inherit" component={Link} to="/login">Login</Button>
+        <Button color="inherit" component={Link} to="/register">Register</Button>
+      </Toolbar>
+    </AppBar>
 </nav>)
 }
 
