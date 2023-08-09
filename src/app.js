@@ -44,7 +44,7 @@ return(
         <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/routines" element={<Routines routines={routines} setRoutines={setRoutines} loading={loading} setLoading={setLoading} routineWithActivities={routineWithActivities} setRoutineWithActivities={setRoutineWithActivities}/>}/>
-            <Route path="/myroutines" element={<Myroutines />}/>
+            <Route path="/myroutines" element={<Myroutines token={token} username={username} setUsername={setUsername} />}/>
             <Route path="/activities" element={<Activities activities={activities} setActivities={setActivities} loading={loading} setLoading={setLoading} token={token} />}/>
             <Route path="/login" element={<Login token={token} username={username} setUsername={setUsername} password={password} setPassword={setPassword} />}/>
             <Route path="/register" element={<Register token={token} username={username} setUsername={setUsername} password={password} setPassword={setPassword}/>}/>
